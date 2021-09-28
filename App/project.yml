@@ -12,6 +12,8 @@ targets:
     type: application
     platform: iOS
     deploymentTarget: 14.0
+    settings:
+      TARGETED_DEVICE_FAMILY: 1
     sources:
       - path: Magic-Gallery
     preBuildScripts:
