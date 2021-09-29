@@ -15,7 +15,7 @@ class MagicCollectionViewController: UICollectionViewController {
 
         collectionView.delegate = self
 
-        collectionView.register(UICollectionViewCell.self)
+        collectionView.register(CollectionCardViewCell.self)
         collectionView.register(CollectionSectionHeaderView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
     }
@@ -32,9 +32,11 @@ class MagicCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(for: indexPath)
+        let cell = collectionView
+            .dequeueReusableCell(withReuseIdentifier: CollectionCardViewCell.defaultReuseIdentifier,
+                                 for: indexPath)
 
-        cell.backgroundColor = UIColor.purple
+        cell.backgroundColor = .purple
 
         return cell
     }
@@ -42,13 +44,18 @@ class MagicCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
-            let sectionHeader = collectionView
+            guard let sectionHeader = collectionView
                 .dequeueReusableSupplementaryView(ofKind: kind,
                                                   withReuseIdentifier: CollectionSectionHeaderView
                                                       .defaultReuseIdentifier,
-                                                  for: indexPath)
-//            sectionHeader?.setText("Titulo")
+                                                  for: indexPath) as? CollectionSectionHeaderView else {
+                return UICollectionReusableView()
+            }
+
+            sectionHeader.setText("Titulo")
+
             return sectionHeader
+
         } else {
             return UICollectionReusableView()
         }
@@ -56,7 +63,7 @@ class MagicCollectionViewController: UICollectionViewController {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 40)
+        CGSize(width: collectionView.frame.width, height: 40)
     }
 }
 

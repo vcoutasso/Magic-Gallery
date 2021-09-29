@@ -45,3 +45,5 @@ class CollectionSectionHeaderView: UICollectionReusableView {
         label.text = text
     }
 }
+
+extension CollectionSectionHeaderView: ReusableView {}

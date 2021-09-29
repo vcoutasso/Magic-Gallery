@@ -16,12 +16,4 @@ extension UICollectionView {
         where T: ReusableView {
         register(T.self, forSupplementaryViewOfKind: elementKind, withReuseIdentifier: T.defaultReuseIdentifier)
     }
-
-    func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T where T: ReusableView {
-        guard let cell = dequeueReusableCell(withReuseIdentifier: T.defaultReuseIdentifier, for: indexPath) as? T else {
-            fatalError("Could not dequeue cell with identifier: \(T.defaultReuseIdentifier)")
-        }
-
-        return cell
-    }
 }
