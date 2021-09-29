@@ -7,9 +7,6 @@
 
 import UIKit
 
-let reuseIdentifier = "CardMiniature"
-let collectionIdentifier = "header"
-
 class MagicCollectionViewController: UICollectionViewController {
     // MARK: - Lifecycle
 
@@ -18,10 +15,9 @@ class MagicCollectionViewController: UICollectionViewController {
 
         collectionView.delegate = self
 
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(UICollectionViewCell.self)
         collectionView.register(CollectionSectionHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: collectionIdentifier)
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
     }
 
     // MARK: Collection methods
@@ -36,9 +32,9 @@ class MagicCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(for: indexPath)
 
-        cell.backgroundColor = .purple
+        cell.backgroundColor = UIColor.purple
 
         return cell
     }
@@ -48,10 +44,11 @@ class MagicCollectionViewController: UICollectionViewController {
         if kind == UICollectionView.elementKindSectionHeader {
             let sectionHeader = collectionView
                 .dequeueReusableSupplementaryView(ofKind: kind,
-                                                  withReuseIdentifier: collectionIdentifier,
-                                                  for: indexPath) as? CollectionSectionHeaderView
+                                                  withReuseIdentifier: CollectionSectionHeaderView
+                                                      .defaultReuseIdentifier,
+                                                  for: indexPath)
 //            sectionHeader?.setText("Titulo")
-            return sectionHeader!
+            return sectionHeader
         } else {
             return UICollectionReusableView()
         }

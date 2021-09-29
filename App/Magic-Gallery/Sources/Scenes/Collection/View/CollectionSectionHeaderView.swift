@@ -26,16 +26,12 @@ class CollectionSectionHeaderView: UICollectionReusableView {
 
         addSubview(label)
 
-//        label.snp.makeConstraints { make in
-//            make.top.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.leading.equalToSuperview()
-//                .offset(20)
-//        }
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        label.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        label.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        label.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.leading.equalToSuperview()
+                .offset(20)
+        }
     }
 
     @available(*, unavailable)
