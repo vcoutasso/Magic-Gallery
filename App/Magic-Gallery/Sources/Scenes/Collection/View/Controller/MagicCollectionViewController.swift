@@ -57,7 +57,7 @@ class MagicCollectionViewController: UICollectionViewController {
             return UICollectionViewCell()
         }
 
-        cell.setup(with: cards[(indexPath.section * 3) + indexPath.row])
+        cell.setup(with: cards[(indexPath.section * Int(LayoutMetrics.itemsPerRow)) + indexPath.row])
 
         return cell
     }
@@ -79,6 +79,14 @@ class MagicCollectionViewController: UICollectionViewController {
 
         } else {
             return UICollectionReusableView()
+        }
+    }
+
+    override func collectionView(_ collectionView: UICollectionView,
+                                 didEndDisplaying cell: UICollectionViewCell,
+                                 forItemAt indexPath: IndexPath) {
+        if let card = cell as? CollectionCardViewCell {
+            card.cancelDownloadTask()
         }
     }
 

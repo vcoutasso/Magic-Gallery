@@ -5,6 +5,7 @@
 //  Created by Vinícius Couto on 29/09/21.
 //
 
+import Kingfisher
 import MTGSDKSwift
 import UIKit
 
@@ -15,7 +16,7 @@ class CollectionCardViewCell: UICollectionViewCell {
 
     private var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .lightGray
+        imageView.kf.indicatorType = .activity
 
         return imageView
     }()
@@ -25,6 +26,12 @@ class CollectionCardViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        setupImageView()
+    }
+
+    // MARK: - Private methods
+
+    private func setupImageView() {
         contentView.addSubview(imageView)
 
         imageView.snp.makeConstraints { make in
@@ -38,10 +45,19 @@ class CollectionCardViewCell: UICollectionViewCell {
         self.card = card
 
         if let urlString = card.imageUrl {
-            if let url = URL(string: urlString) {
-                imageView.load(url: url)
+            imageView.kf.setImage(with: URL(string: urlString), placeholder: UIImage(named: "")) { result in
+                switch result {
+                case .success:
+                    break
+                case let .failure(error):
+                    print(error.localizedDescription)
+                }
             }
         }
+    }
+
+    func cancelDownloadTask() {
+        imageView.kf.cancelDownloadTask()
     }
 
     @available(*, unavailable)

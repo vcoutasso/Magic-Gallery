@@ -8,7 +8,7 @@ target 'Magic-Gallery' do
   pod 'SwiftLint'
   pod 'SwiftGen'
   pod 'SnapKit'
-
+  pod 'Kingfisher'
   pod 'MTGSDKSwift'
 
 end
