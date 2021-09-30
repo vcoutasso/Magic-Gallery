@@ -5,13 +5,27 @@
 //  Created by Vinícius Couto on 28/09/21.
 //
 
+import Combine
+import MTGSDKSwift
 import UIKit
 
 class MagicCollectionViewController: UICollectionViewController {
+    var cards = [Card]()
+    var cardsSubscription: AnyCancellable?
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        cardsSubscription = MagicCards.shared.cardsSubject
+            .receive(on: RunLoop.main, options: nil)
+            .sink { [weak self] cards in
+                guard let self = self else { return }
+
+                self.cards = cards
+                self.collectionView.reloadData()
+            }
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -21,6 +35,10 @@ class MagicCollectionViewController: UICollectionViewController {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
     }
 
+    deinit {
+        cardsSubscription?.cancel()
+    }
+
     // MARK: Collection methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -28,7 +46,7 @@ class MagicCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        2
+        cards.count
     }
 
     override func collectionView(_ collectionView: UICollectionView,
@@ -38,6 +56,8 @@ class MagicCollectionViewController: UICollectionViewController {
                                  for: indexPath) as? CollectionCardViewCell else {
             return UICollectionViewCell()
         }
+
+        cell.setup(with: cards[(indexPath.section * 3) + indexPath.row])
 
         return cell
     }

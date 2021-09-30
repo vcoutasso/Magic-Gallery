@@ -9,31 +9,38 @@ import MTGSDKSwift
 import UIKit
 
 class CollectionCardViewCell: UICollectionViewCell {
-    let magic = Magic()
+    // MARK: - Private attributes
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private var card: Card?
 
-        let color = CardSearchParameter(parameterType: .colors, value: "black")
-        let cmc = CardSearchParameter(parameterType: .cmc, value: "2")
-        let setCode = CardSearchParameter(parameterType: .set, value: "AER")
-
+    private var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .lightGray
 
-        magic.fetchCards([color, cmc, setCode]) { cards, error in
+        return imageView
+    }()
 
-            if let error = error {
-                print(error)
-            }
+    // MARK: - Initialization
 
-            imageView.load(url: URL(string: cards!.first!.imageUrl!)!)
-        }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
         contentView.addSubview(imageView)
 
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+
+    // MARK: - Public methdos
+
+    func setup(with card: Card) {
+        self.card = card
+
+        if let urlString = card.imageUrl {
+            if let url = URL(string: urlString) {
+                imageView.load(url: url)
+            }
         }
     }
 
