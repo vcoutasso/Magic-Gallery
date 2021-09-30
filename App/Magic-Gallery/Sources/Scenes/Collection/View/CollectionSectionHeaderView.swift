@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-class CollectionSectionHeaderView: UICollectionReusableView {
+final class CollectionSectionHeaderView: UICollectionReusableView {
     private lazy var label: UILabel = {
         let label = UILabel()
 

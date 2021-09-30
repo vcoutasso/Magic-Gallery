@@ -9,9 +9,12 @@ import Combine
 import MTGSDKSwift
 import UIKit
 
-class MagicCollectionViewController: UICollectionViewController {
-    var cards = [Card]()
-    var cardsSubscription: AnyCancellable?
+final class MagicCollectionViewController: UICollectionViewController {
+    // MARK: Private attributes
+
+    private var cards = [Card]()
+    private var cardCollections: Int = 1
+    private var cardsSubscription: AnyCancellable?
 
     // MARK: - Lifecycle
 
@@ -42,7 +45,7 @@ class MagicCollectionViewController: UICollectionViewController {
     // MARK: Collection methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        cardCollections
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

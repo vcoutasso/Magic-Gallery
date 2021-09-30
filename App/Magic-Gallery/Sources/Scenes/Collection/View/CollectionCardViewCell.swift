@@ -9,7 +9,7 @@ import Kingfisher
 import MTGSDKSwift
 import UIKit
 
-class CollectionCardViewCell: UICollectionViewCell {
+final class CollectionCardViewCell: UICollectionViewCell {
     // MARK: - Private attributes
 
     private var card: Card?
@@ -45,14 +45,7 @@ class CollectionCardViewCell: UICollectionViewCell {
         self.card = card
 
         if let urlString = card.imageUrl {
-            imageView.kf.setImage(with: URL(string: urlString), placeholder: UIImage(named: "")) { result in
-                switch result {
-                case .success:
-                    break
-                case let .failure(error):
-                    print(error.localizedDescription)
-                }
-            }
+            imageView.kf.setImage(with: URL(string: urlString), placeholder: UIImage(named: ""))
         }
     }
 

@@ -8,7 +8,7 @@
 import Combine
 import MTGSDKSwift
 
-class MagicCards {
+final class MagicCards {
     // MARK: - Singleton
 
     static var shared: MagicCards = .init()
@@ -17,10 +17,15 @@ class MagicCards {
 
     private let magic: Magic = {
         let magic = Magic()
-        magic.fetchPageTotal = "1"
+
+        magic.fetchPageTotal = "450"
         magic.fetchPageSize = "100"
 
         return magic
+    }()
+
+    private let searchParameters: [CardSearchParameter] = {
+        [CardSearchParameter(parameterType: .contains, value: "imageUrl")]
     }()
 
     private(set) var allCards = [Card]()
@@ -30,17 +35,27 @@ class MagicCards {
     // MARK: - Initialization
 
     private init() {
-        magic.fetchCards([]) { [weak self] cards, error in
-            guard let self = self else { return }
+        Magic.enableLogging = false
 
-            if let cards = cards {
-                self.allCards.append(contentsOf: cards)
-                self.cardsSubject.send(self.allCards)
-            }
+        magic.fetchCards(searchParameters, completion: fetchPages)
+    }
 
-            if let error = error {
-                print(error.localizedDescription)
+    // MARK: - Private methods
+
+    private func fetchPages(result: [Card]?, error: NetworkError?) {
+        if let cards = result, !cards.isEmpty {
+            allCards.append(contentsOf: cards)
+            cardsSubject.send(allCards)
+
+            if cards.count == Int(magic.fetchPageSize) {
+                let nextPage = Int(magic.fetchPageTotal)! + 1
+                magic.fetchPageTotal = String(nextPage)
+                magic.fetchCards(searchParameters, completion: fetchPages)
             }
+        }
+
+        if let error = error {
+            print(error.localizedDescription)
         }
     }
 }
