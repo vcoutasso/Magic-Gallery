@@ -5,14 +5,30 @@
 //  Created by Vinícius Couto on 29/09/21.
 //
 
+import MTGSDKSwift
 import UIKit
 
 class CollectionCardViewCell: UICollectionViewCell {
+    let magic = Magic()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let imageView = UIImageView(image: UIImage(named: ""))
+        let color = CardSearchParameter(parameterType: .colors, value: "black")
+        let cmc = CardSearchParameter(parameterType: .cmc, value: "2")
+        let setCode = CardSearchParameter(parameterType: .set, value: "AER")
+
+        let imageView = UIImageView()
         imageView.backgroundColor = .lightGray
+
+        magic.fetchCards([color, cmc, setCode]) { cards, error in
+
+            if let error = error {
+                print(error)
+            }
+
+            imageView.load(url: URL(string: cards!.first!.imageUrl!)!)
+        }
 
         contentView.addSubview(imageView)
 

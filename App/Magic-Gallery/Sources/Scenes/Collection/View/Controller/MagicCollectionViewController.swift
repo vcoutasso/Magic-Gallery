@@ -24,11 +24,11 @@ class MagicCollectionViewController: UICollectionViewController {
     // MARK: Collection methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        4
+        1
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        2
     }
 
     override func collectionView(_ collectionView: UICollectionView,

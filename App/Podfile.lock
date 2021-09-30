@@ -1,10 +1,12 @@
 PODS:
+  - MTGSDKSwift (1.0.0)
   - SnapKit (5.0.1)
   - SwiftFormat/CLI (0.48.11)
   - SwiftGen (6.4.0)
   - SwiftLint (0.44.0)
 
 DEPENDENCIES:
+  - MTGSDKSwift
   - SnapKit
   - SwiftFormat/CLI
   - SwiftGen
@@ -12,17 +14,19 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - MTGSDKSwift
     - SnapKit
     - SwiftFormat
     - SwiftGen
     - SwiftLint
 
 SPEC CHECKSUMS:
+  MTGSDKSwift: c6dfc96f12a5477fd5c9231749253c3a9cdfd393
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftFormat: 938e5865a118c49d63c7a290ddad86335f9e585f
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   SwiftLint: e96c0a8c770c7ebbc4d36c55baf9096bb65c4584
 
-PODFILE CHECKSUM: 129d8235b6ea9552d4ca5a7c68f099e392965a94
+PODFILE CHECKSUM: 303d5bf34a706203ed0d3bea88d4ead6761c3028
 
 COCOAPODS: 1.11.2
