@@ -13,19 +13,24 @@ final class MagicCards {
 
     static var shared: MagicCards = .init()
 
+    // MARK: - Constants
+
+    private static let initialFetchPage: Int = 450
+    private static let fetchPageSize: Int = 100
+
     // MARK: - Private attributes
 
     private let magic: Magic = {
         let magic = Magic()
 
-        magic.fetchPageTotal = "450"
-        magic.fetchPageSize = "100"
+        magic.fetchPageTotal = String(MagicCards.initialFetchPage)
+        magic.fetchPageSize = String(MagicCards.fetchPageSize)
 
         return magic
     }()
 
     private let searchParameters: [CardSearchParameter] = {
-        [CardSearchParameter(parameterType: .contains, value: "imageUrl")]
+        [CardSearchParameter(parameterType: .contains, value: Strings.Names.CardParameter.imageURL)]
     }()
 
     private(set) var cardsSetName: Set<String> = []

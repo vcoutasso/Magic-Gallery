@@ -1,7 +1,9 @@
 input_dir: ../App/Magic-Gallery/Resources/
 output_dir: ../App/Magic-Gallery/Resources/Generated/
 strings:
-  inputs: Base.lproj
+  inputs: 
+    - Base.lproj
+    - Names.strings
   filter: .+\.strings$
   outputs:
     - templateName: structured-swift5
