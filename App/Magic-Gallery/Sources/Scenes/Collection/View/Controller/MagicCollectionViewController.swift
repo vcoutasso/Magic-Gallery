@@ -14,6 +14,7 @@ class MagicCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 
         collectionView.delegate = self
+        collectionView.dataSource = self
 
         collectionView.register(CollectionCardViewCell.self)
         collectionView.register(CollectionSectionHeaderView.self,
@@ -23,20 +24,20 @@ class MagicCollectionViewController: UICollectionViewController {
     // MARK: Collection methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        4
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        20
     }
 
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView
+        guard let cell = collectionView
             .dequeueReusableCell(withReuseIdentifier: CollectionCardViewCell.defaultReuseIdentifier,
-                                 for: indexPath)
-
-        cell.backgroundColor = .purple
+                                 for: indexPath) as? CollectionCardViewCell else {
+            return UICollectionViewCell()
+        }
 
         return cell
     }
@@ -63,7 +64,49 @@ class MagicCollectionViewController: UICollectionViewController {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        CGSize(width: collectionView.frame.width, height: 40)
+        CGSize(width: collectionView.frame.width,
+               height: CollectionSectionHeaderView.LayoutMetrics.titleFontSize)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.size.width -
+            2 * LayoutMetrics.sectionHorizontalInset -
+            (LayoutMetrics.itemsPerRow - 1) * LayoutMetrics.interitemSpacing) / LayoutMetrics.itemsPerRow
+
+        return CGSize(width: width, height: width * LayoutMetrics.cardAspectRatio)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        LayoutMetrics.interitemSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        LayoutMetrics.interitemSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: LayoutMetrics.sectionVerticalInset,
+                     left: LayoutMetrics.sectionHorizontalInset,
+                     bottom: LayoutMetrics.sectionVerticalInset,
+                     right: LayoutMetrics.sectionHorizontalInset)
+    }
+
+    // MARK: Layout Metrics
+
+    private enum LayoutMetrics {
+        static let itemsPerRow: CGFloat = 3
+        static let interitemSpacing: CGFloat = 10
+        static let sectionVerticalInset: CGFloat = 15
+        static let sectionHorizontalInset: CGFloat = CollectionSectionHeaderView.LayoutMetrics.titleLeadingOffset
+        static let cardAspectRatio: CGFloat = 4 / 3
     }
 }
 

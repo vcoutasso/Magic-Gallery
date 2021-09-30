@@ -14,7 +14,7 @@ class CollectionSectionHeaderView: UICollectionReusableView {
 
         label.textColor = .black
         label.text = "Default Header Title"
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = .systemFont(ofSize: LayoutMetrics.titleFontSize, weight: .bold)
 
         return label
     }()
@@ -30,7 +30,7 @@ class CollectionSectionHeaderView: UICollectionReusableView {
             make.top.equalToSuperview()
             make.trailing.equalToSuperview()
             make.leading.equalToSuperview()
-                .offset(20)
+                .offset(LayoutMetrics.titleLeadingOffset)
         }
     }
 
@@ -43,6 +43,13 @@ class CollectionSectionHeaderView: UICollectionReusableView {
 
     func setText(_ text: String) {
         label.text = text
+    }
+
+    // MARK: - Layout Metrics
+
+    enum LayoutMetrics {
+        static let titleFontSize: CGFloat = 28
+        static let titleLeadingOffset: CGFloat = 16
     }
 }
 

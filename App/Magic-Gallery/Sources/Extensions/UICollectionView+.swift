@@ -1,5 +1,5 @@
 //
-//  UICollectionView.swift
+//  UICollectionView+.swift
 //  Magic-Gallery
 //
 //  Created by Vinícius Couto on 28/09/21.
