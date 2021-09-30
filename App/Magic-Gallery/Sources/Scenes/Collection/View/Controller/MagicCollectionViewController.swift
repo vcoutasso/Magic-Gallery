@@ -13,7 +13,11 @@ final class MagicCollectionViewController: UICollectionViewController {
     // MARK: Private attributes
 
     private var cards = [Card]()
-    private var cardCollections: Int = 1
+
+    private var sectionNames: [String] {
+        Array(MagicCards.shared.cardsSetName).sorted()
+    }
+
     private var cardsSubscription: AnyCancellable?
 
     // MARK: - Lifecycle
@@ -45,7 +49,7 @@ final class MagicCollectionViewController: UICollectionViewController {
     // MARK: Collection methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        cardCollections
+        sectionNames.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -76,7 +80,7 @@ final class MagicCollectionViewController: UICollectionViewController {
                 return UICollectionReusableView()
             }
 
-            sectionHeader.setText("Titulo")
+            sectionHeader.setText(sectionNames[indexPath.section])
 
             return sectionHeader
 

@@ -28,7 +28,13 @@ final class MagicCards {
         [CardSearchParameter(parameterType: .contains, value: "imageUrl")]
     }()
 
+    private(set) var cardsSetName: Set<String> = []
+
     private(set) var allCards = [Card]()
+
+    var uniqueSetsCount: Int {
+        cardsSetName.count
+    }
 
     let cardsSubject = CurrentValueSubject<[Card], Never>([])
 
@@ -44,6 +50,10 @@ final class MagicCards {
 
     private func fetchPages(result: [Card]?, error: NetworkError?) {
         if let cards = result, !cards.isEmpty {
+            let uniqueSets = Set(cards.map { $0.setName })
+
+            cardsSetName.insert(uniqueSets.first!!)
+
             allCards.append(contentsOf: cards)
             cardsSubject.send(allCards)
 
