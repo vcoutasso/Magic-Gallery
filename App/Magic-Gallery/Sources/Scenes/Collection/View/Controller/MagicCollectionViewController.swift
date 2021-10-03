@@ -64,6 +64,7 @@ final class MagicCollectionViewController: UICollectionViewController {
             return UICollectionViewCell()
         }
 
+        // FIXME: Crashes when scrolling too fast
         cell.setup(with: cards[(indexPath.section * Int(LayoutMetrics.itemsPerRow)) + indexPath.row])
 
         return cell

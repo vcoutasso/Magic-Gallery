@@ -1,0 +1,13 @@
+/* 
+  Names.strings
+  Magic-Gallery
+
+  Created by Vinícius Couto on 30/09/21.
+  
+*/
+
+"placeholders.defaultSectionTitle" = "Default Section Title";
+
+"magic.cardParameter.gameFormat.standard" = "Standard";
+"magic.cardParameter.gameFormat.modern" = "Modern";
+"magic.cardParameter.imageURL" = "imageUrl";

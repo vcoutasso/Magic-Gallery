@@ -13,7 +13,7 @@ final class CollectionSectionHeaderView: UICollectionReusableView {
         let label = UILabel()
 
         label.textColor = .black
-        label.text = Strings.Names.Placeholders.defaultSectionTitle
+        label.text = Strings.Placeholders.defaultSectionTitle
         label.font = .systemFont(ofSize: LayoutMetrics.titleFontSize, weight: .bold)
 
         return label
