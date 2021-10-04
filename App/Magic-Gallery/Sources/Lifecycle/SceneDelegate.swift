@@ -15,7 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let vc = MagicCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+//        let vc = MagicCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        let vc = CardsGalleryViewController()
 
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = vc

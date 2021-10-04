@@ -6,6 +6,8 @@
   
 */
 
+"icons.addSymbol" = "plus";
+
 "placeholders.defaultSectionTitle" = "Default Section Title";
 
 "magic.cardParameter.gameFormat.standard" = "Standard";
