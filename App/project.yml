@@ -11,7 +11,7 @@ targets:
   Magic-Gallery:
     type: application
     platform: iOS
-    deploymentTarget: 14.0
+    deploymentTarget: 15.0
     settings:
       TARGETED_DEVICE_FAMILY: 1
     sources:

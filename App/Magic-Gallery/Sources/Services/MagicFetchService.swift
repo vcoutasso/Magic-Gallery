@@ -16,8 +16,8 @@ class MagicFetchService {
         [CardSearchParameter(parameterType: .contains, value: Strings.Magic.CardParameter.imageURL)]
     }()
 
-    private var fetchPageSize: Int = 100
     private var fetchPage: Int = 1
+    private var fetchPageSize: Int = 100
 
     // MARK: - Initialization
 
