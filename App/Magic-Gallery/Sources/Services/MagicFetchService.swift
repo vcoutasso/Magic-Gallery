@@ -46,9 +46,9 @@ class MagicFetchService {
 
     func setupPageSize(_ results: Int) {
         if results < 1 {
-            fetchPage = 1
+            fetchPageSize = 1
         } else {
-            fetchPage = max(100, results)
+            fetchPageSize = max(100, results)
         }
     }
 

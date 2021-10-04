@@ -30,15 +30,19 @@ final class MagicCards {
     // MARK: - Initialization
 
     private init() {
-        fetchService.fetchAllPages { [weak self] results in
-            guard let self = self else { return }
+        let shouldFetchEverything = false
 
-            if let cards = results, !cards.isEmpty {
-                let uniqueSets = Set(cards.map { $0.setName })
+        if shouldFetchEverything {
+            fetchService.fetchAllPages { [weak self] results in
+                guard let self = self else { return }
 
-                self.cardsSetName.insert(uniqueSets.first!!)
-                self.allCards.append(contentsOf: cards)
-                self.cardsSubject.send(self.allCards)
+                if let cards = results, !cards.isEmpty {
+                    let uniqueSets = Set(cards.map { $0.setName })
+
+                    self.cardsSetName.insert(uniqueSets.first!!)
+                    self.allCards.append(contentsOf: cards)
+                    self.cardsSubject.send(self.allCards)
+                }
             }
         }
     }

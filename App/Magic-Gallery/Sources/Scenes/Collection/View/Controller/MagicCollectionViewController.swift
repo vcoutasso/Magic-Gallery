@@ -12,10 +12,10 @@ import UIKit
 final class MagicCollectionViewController: UICollectionViewController {
     // MARK: Private attributes
 
-    private var cards = [Card]()
+    var cards = [Card]()
 
     private var sectionNames: [String] {
-        Array(MagicCards.shared.cardsSetName).sorted()
+        return Set(cards.map { $0.setName }).map { $0 ?? "Default name" }.sorted()
     }
 
     private var cardsSubscription: AnyCancellable?
