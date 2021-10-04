@@ -12,7 +12,7 @@ import UIKit
 final class CollectionCardViewCell: UICollectionViewCell {
     // MARK: - Private attributes
 
-    private var card: Card?
+    private(set) var card: Card?
 
     private var imageView: UIImageView = {
         let imageView = UIImageView()
