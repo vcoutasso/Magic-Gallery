@@ -67,7 +67,10 @@ final class CardsGalleryViewController: UIViewController {
         }
     }
 
-    @objc private func handleAddButtonTapped() {}
+    @objc private func handleAddButtonTapped() {
+        modalPresentationStyle = .fullScreen
+        present(AddCardViewController(), animated: true)
+    }
 
     // MARK: - Layout Metrics
 

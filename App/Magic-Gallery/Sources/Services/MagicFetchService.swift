@@ -40,6 +40,25 @@ class MagicFetchService {
 
     // MARK: - Public methods
 
+    func setupCurrentPageNumber(_ page: Int) {
+        fetchPage = max(1, page)
+    }
+
+    func setupPageSize(_ results: Int) {
+        if results < 1 {
+            fetchPage = 1
+        } else {
+            fetchPage = max(100, results)
+        }
+    }
+
+    func setupSearch(cardName: String) {
+        searchParameters = searchParameters
+            .filter { $0.name != CardSearchParameter.CardQueryParameterType.name.rawValue }
+
+        searchParameters.append(CardSearchParameter(parameterType: .name, value: cardName))
+    }
+
     func fetchCurrentPage(completion: @escaping ([Card]?) -> Void) {
         magic.fetchPageSize = String(describing: fetchPageSize)
         magic.fetchPageTotal = String(describing: fetchPage)
@@ -54,8 +73,8 @@ class MagicFetchService {
     }
 
     func fetchAllPages(from page: Int = 1, with pageSize: Int = 100, then completion: @escaping ([Card]?) -> Void) {
-        fetchPage = page
-        fetchPageSize = pageSize
+        setupCurrentPageNumber(page)
+        setupPageSize(pageSize)
 
         var resultsAccumulator: [Card]? = []
 
