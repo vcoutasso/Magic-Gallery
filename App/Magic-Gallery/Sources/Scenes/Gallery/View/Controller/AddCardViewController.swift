@@ -16,16 +16,14 @@ final class AddCardViewController: UIViewController {
     }()
 
     private var fetchService: MagicFetchService = {
-        let service = MagicFetchService(gameFormat: .standard)
+        let service = MagicFetchService(gameFormat: .modern)
         service.setupCurrentPageNumber(1)
         service.setupPageSize(15)
 
         return service
     }()
 
-    private var searchResults: [Card] = []
-
-    private let resultsVC = MagicCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+    private let resultsVC = FetchResultsCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
 
     // MARK: - Lifecycle
 
@@ -75,14 +73,11 @@ extension AddCardViewController: UISearchBarDelegate {
 
             fetchService.fetchCurrentPage { [weak self] cards in
                 if let cards = cards {
-                    self?.searchResults = cards
-                    self?.resultsVC.cards = cards
-                    DispatchQueue.main.async {
-                        self?.resultsVC.collectionView.reloadData()
-                    }
+                    self?.resultsVC.updateCards(cards)
                 }
             }
         }
+
         searchBar.endEditing(true)
     }
 

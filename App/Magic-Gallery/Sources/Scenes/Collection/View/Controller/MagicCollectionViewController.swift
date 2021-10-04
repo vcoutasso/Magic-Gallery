@@ -9,16 +9,22 @@ import Combine
 import MTGSDKSwift
 import UIKit
 
-final class MagicCollectionViewController: UICollectionViewController {
+class MagicCollectionViewController: UICollectionViewController {
     // MARK: Private attributes
 
-    var cards = [Card]()
+    private let defaultSetName = "Default set name"
 
-    private var sectionNames: [String] {
-        return Set(cards.map { $0.setName }).map { $0 ?? "Default name" }.sorted()
+    internal var cards = [Card]() {
+        didSet {
+            cards = cards.sorted(by: { $0.setName ?? defaultSetName < $1.setName ?? defaultSetName })
+        }
     }
 
-    private var cardsSubscription: AnyCancellable?
+    internal var sectionNames: [String] {
+        return Set(cards.map { $0.setName }).map { $0 ?? defaultSetName }.sorted()
+    }
+
+    internal var cardsSubscription: AnyCancellable?
 
     // MARK: - Lifecycle
 
@@ -53,7 +59,7 @@ final class MagicCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cards.count
+        cards.filter { $0.setName! == sectionNames[section] }.count
     }
 
     override func collectionView(_ collectionView: UICollectionView,
@@ -64,8 +70,13 @@ final class MagicCollectionViewController: UICollectionViewController {
             return UICollectionViewCell()
         }
 
-        // FIXME: Crashes when scrolling too fast
-        cell.setup(with: cards[(indexPath.section * Int(LayoutMetrics.itemsPerRow)) + indexPath.row])
+        var index = 0
+        for i in 0..<indexPath.section {
+            index += collectionView.numberOfItems(inSection: i)
+        }
+        index += indexPath.row
+
+        cell.setup(with: cards[index])
 
         return cell
     }
@@ -137,7 +148,7 @@ final class MagicCollectionViewController: UICollectionViewController {
 
     // MARK: Layout Metrics
 
-    private enum LayoutMetrics {
+    internal enum LayoutMetrics {
         static let itemsPerRow: CGFloat = 3
         static let interitemSpacing: CGFloat = 10
         static let sectionVerticalInset: CGFloat = 15
