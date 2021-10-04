@@ -35,4 +35,9 @@ final class MagicCards {
         allCards.append(card)
         cardsSubject.send(allCards)
     }
+
+    func removeCard(at index: Int) {
+        allCards.remove(at: index)
+        cardsSubject.send(allCards)
+    }
 }

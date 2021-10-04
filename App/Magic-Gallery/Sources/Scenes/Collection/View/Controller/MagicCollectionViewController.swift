@@ -52,6 +52,18 @@ class MagicCollectionViewController: UICollectionViewController {
         cardsSubscription?.cancel()
     }
 
+    // MARK: - Internal methods
+
+    internal func indexOfCardAt(_ indexPath: IndexPath) -> Int {
+        var index = 0
+
+        for i in 0..<indexPath.section {
+            index += collectionView.numberOfItems(inSection: i)
+        }
+
+        return index + indexPath.row
+    }
+
     // MARK: Collection methods
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -70,15 +82,13 @@ class MagicCollectionViewController: UICollectionViewController {
             return UICollectionViewCell()
         }
 
-        var index = 0
-        for i in 0..<indexPath.section {
-            index += collectionView.numberOfItems(inSection: i)
-        }
-        index += indexPath.row
-
-        cell.setup(with: cards[index])
+        cell.setup(with: cards[indexOfCardAt(indexPath)])
 
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        MagicCards.shared.removeCard(at: indexOfCardAt(indexPath))
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,
